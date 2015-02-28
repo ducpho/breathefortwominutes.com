@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    Idea by @richarddent with sweet inspiration from @donothing2min
+    Built by @romcake, source on https://github.com/romkebon/breathefortwominutes.com
+  -->
+  <title>Breathe for two minutes</title>
+  <style>
+    html,
+    body {
+      background: url('breathe.jpg') no-repeat center;
+      background-size: cover;
+      color: rgb(0,33,76);
+      font-family: "Gill Sans", "Gill Sans MT", sans-serif;
+      height: 100%;
+      margin: 0;
+    }
+    main,
+    blockquote {
+      margin: auto;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      font-size: 2em;
+      height: 4em;
+      text-align: center;
+    }
+    h1, h2 {
+      font-size: 1em;
+      font-weight: normal;
+    }
+    footer {
+      bottom: 0;
+      position: absolute;
+      text-align: center;
+      width: 100%
+    }
+    footer span,
+    footer a {
+      display: inline-block;
+      margin: 1em 3em;
+      color: #fff;
+      text-shadow: 1px 1px 1px #000;
+    }
+    .no-coming {
+      opacity: 1;
+      -webkit-transition: all 1s;
+      transition: all 1s
+
+    }
+    .no-going {
+      opacity: 0;
+      -webkit-transition: all 1s;
+      transition: all 1s
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Breathe for two minutes</h1>
+    <h2>2:00</h2>
+  </main>
+  <blockquote class="no-going"></blockquote>
+ <footer class="no-going">
+   <span>More breathing?</span> <a href="http://www.wkup.org/">wkup.org</a> <a href="http://plumvillage.org/">plumvillage.org</a>
+ </footer>
+ <script>
+ var Breathe = {
+  quotes: ["This is a happy moment",
+  "Smile, you are alive"],
+  seconds: 120,
+  element: document.querySelector("h2"),
+  updateTime: function() {
+    Breathe.seconds--;
+    var minutes = Math.floor(Breathe.seconds / 60),
+     secondsThisMinute = Breathe.seconds - (minutes * 60) + "";
+    if(secondsThisMinute.length < 2) secondsThisMinute = "0" + secondsThisMinute;
+
+    Breathe.element.innerHTML = minutes + ":" + secondsThisMinute;
+    if(!Breathe.seconds) {
+      window.clearInterval(Breathe.timer);
+      document.body.children[0].className += "no-going";
+      document.body.children[1].innerHTML += Breathe.quotes[Math.round(Math.random() * (Breathe.quotes.length - 1))] + " - <cite>Thich Nhat Hanh</cite>";
+      document.body.children[1].className = 
+        document.body.children[2].className = "no-coming";
+    }
+  },
+ };
+ window.onload = function() {
+   Breathe.timer = window.setInterval(function () {
+    Breathe.updateTime();
+   }, 1000);
+ };
+ </script>
+</body>
+</html>
